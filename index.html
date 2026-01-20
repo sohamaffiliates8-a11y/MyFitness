@@ -18,38 +18,32 @@
         .active-view { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Registration UI Overlay */
-        #auth-overlay { position: fixed; inset: 0; background: #fff; z-index: 5000; display: none; flex-direction: column; padding: 40px 20px; animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        .input-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
-        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 12px; outline: none; }
-
-        /* Profile & Dashboard */
-        .profile-header { text-align: center; margin-bottom: 30px; }
-        .avatar-box { width: 100px; height: 100px; background: #eee; border-radius: 50%; margin: 0 auto 15px; overflow: hidden; position: relative; border: 3px solid var(--primary); }
-        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-        #pfp-input { display: none; }
-        .strike-badge { background: #FDE68A; color: #92400E; padding: 10px 20px; border-radius: 15px; display: inline-block; font-weight: 700; margin-top: 10px; }
         .streak-card { background: var(--dark); color: white; padding: 20px; border-radius: 24px; margin-bottom: 20px; }
         .progress-bar { background: rgba(255,255,255,0.1); height: 8px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; }
         .progress-fill { background: var(--primary); height: 100%; width: 0%; transition: 0.5s; }
-        
+
         .plan-card { position: relative; height: 150px; border-radius: 20px; overflow: hidden; margin-bottom: 15px; cursor: pointer; }
         .plan-card img { width: 100%; height: 100%; object-fit: cover; }
         .plan-overlay { position: absolute; inset: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); display: flex; flex-direction: column; justify-content: flex-end; padding: 15px; color: white; }
 
-        /* Grid & Navigation */
         .calendar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; background: var(--bg); padding: 15px; border-radius: 20px; }
-        .day-btn { aspect-ratio: 1; border-radius: 50%; border: 2px solid #ddd; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; }
+        .day-btn { aspect-ratio: 1; border-radius: 50%; border: 2px solid #ddd; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; }
         .day-btn.done { background: var(--primary); border-color: var(--primary); color: #fff; }
         .day-btn.current { border-color: var(--primary); color: var(--primary); box-shadow: 0 4px 10px rgba(34,197,94,0.3); }
 
         #player-view { position: fixed; inset: 0; background: white; z-index: 3000; display: none; flex-direction: column; align-items: center; padding: 40px 20px; text-align: center; }
         .player-active { display: flex !important; }
+        .ex-display-img { width: 120px; height: 120px; background: #f0fdf4; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin: 40px 0; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .timer-circle { font-size: 4rem; font-weight: 700; color: var(--dark); margin: 20px 0; font-family: monospace; }
+        .player-controls { display: flex; gap: 15px; width: 100%; margin-top: auto; }
+        .player-btn { flex: 1; padding: 18px; border-radius: 15px; border: none; font-weight: 700; cursor: pointer; }
+
+        /* Outro/Success Overlay */
+        #success-overlay { position: fixed; inset: 0; background: var(--primary); color: white; z-index: 4000; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: opacity 0.8s ease; }
         
-        #success-overlay { position: fixed; inset: 0; background: var(--primary); color: white; z-index: 6000; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: opacity 0.8s ease; }
+        .section-header { font-weight: 700; color: var(--dark); margin: 20px 0 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .exercise-item { display: flex; align-items: center; gap: 15px; background: #fff; padding: 12px; border-radius: 15px; margin-bottom: 10px; border: 1px solid #f0f0f0; }
         .btn-primary { width: 100%; background: var(--primary); color: white; border: none; padding: 16px; border-radius: 16px; font-weight: 700; cursor: pointer; }
         .nav { position: fixed; bottom: 0; width: 100%; max-width: 450px; background: #fff; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid #eee; }
     </style>
@@ -61,33 +55,19 @@
     <p style="letter-spacing: 2px; font-size: 0.8rem; margin-top: 10px; opacity: 0.8;">CREATED BY RISER CORPORATION</p>
 </div>
 
-<div id="auth-overlay">
-    <h2 style="font-family:Poppins; margin-bottom:10px">Sign Up / Login</h2>
-    <p style="color:var(--gray); margin-bottom:30px">Enter details to unlock workout tracking</p>
-    <div class="input-group">
-        <label>Username</label>
-        <input type="text" id="reg-username" placeholder="Enter name">
-    </div>
-    <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="reg-password" placeholder="Enter password">
-    </div>
-    <button class="btn-primary" onclick="processRegistration()">Continue</button>
-    <p style="margin-top:20px; font-size:0.8rem; color:red; display:none" id="auth-error">Please fill both fields!</p>
-</div>
-
 <div class="app-shell">
+    
     <div id="home" class="content active-view">
-        <h2 style="font-family:Poppins; margin-bottom:20px">Hello, <span id="user-display">Guest</span>!</h2>
+        <h2 style="font-family:Poppins; margin-bottom:20px">My Fitness Log</h2>
         <div class="streak-card">
             <div style="margin-bottom:15px"><span>Fat Loss (HIIT)</span><div class="progress-bar"><div id="bar-wl" class="progress-fill"></div></div></div>
             <div><span>Muscle Gain (Strength)</span><div class="progress-bar"><div id="bar-mg" class="progress-fill"></div></div></div>
         </div>
-        <div class="plan-card" onclick="secureAction(() => openPlan('wl'))">
+        <div class="plan-card" onclick="openPlan('wl')">
             <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400">
             <div class="plan-overlay"><h3>Fat Loss Plan</h3><p>High Intensity Cardio</p></div>
         </div>
-        <div class="plan-card" onclick="secureAction(() => openPlan('mg'))">
+        <div class="plan-card" onclick="openPlan('mg')">
             <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400">
             <div class="plan-overlay"><h3>Muscle Gain Plan</h3><p>Strength & Hypertrophy</p></div>
         </div>
@@ -102,100 +82,50 @@
     <div id="workout" class="content">
         <h2 id="workout-title">Day 1</h2>
         <div id="preview-container">
+            <div class="section-header" style="color:var(--warmup)">⚡ Warmup</div>
             <div id="warmup-preview"></div>
+            <div class="section-header" style="color:var(--primary)">🔥 Main Workout</div>
             <div id="workout-preview"></div>
         </div>
-        <button class="btn-primary" id="start-btn" style="margin-top:20px" onclick="secureAction(startExercise)">Start Workout</button>
-    </div>
-
-    <div id="profile" class="content">
-        <h2 style="font-family:Poppins; margin-bottom:20px">My Profile</h2>
-        <div class="profile-header">
-            <div class="avatar-box" onclick="document.getElementById('pfp-input').click()">
-                <img id="pfp-display" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-            </div>
-            <input type="file" id="pfp-input" accept="image/*" onchange="uploadPhoto(this)">
-            <h3 id="profile-name">User Name</h3>
-            <div class="strike-badge">🔥 <span id="total-strikes">0</span> Total Strikes</div>
-        </div>
-        <button class="btn-primary" onclick="logoutAccount()" style="background:#fee2e2; color:#ef4444">Logout Account</button>
+        <button class="btn-primary" id="start-btn" style="margin-top:20px">Start Workout</button>
     </div>
 
     <div id="player-view">
         <div id="player-meta">SET 1 OF 2</div>
         <h1 id="player-ex-name">Push Ups</h1>
+        <div class="ex-display-img" id="player-img">💪</div>
+        <h2 id="player-target">10 Reps</h2>
         <div class="timer-circle" id="timer-display">00:30</div>
         <div class="player-controls">
-            <button class="player-btn" onclick="prevStep()">Back</button>
+            <button class="player-btn" style="background:#f3f4f6" onclick="prevStep()">Back</button>
             <button class="player-btn" id="main-action-btn" style="background:var(--primary); color:white" onclick="nextStep()">Done</button>
         </div>
     </div>
 
     <div id="success-overlay">
         <div style="font-size: 5rem">🔥</div>
-        <h1>Day Completed!</h1>
+        <h1 style="font-family: Poppins">Day Completed!</h1>
+        <p id="success-msg">You're getting stronger.</p>
+        <p style="margin-top:20px; font-size: 0.7rem; opacity: 0.7">RISER CORPORATION</p>
     </div>
 
     <div class="nav">
-        <button onclick="showView('home')">🏠</button>
-        <button onclick="secureAction(() => showView('calendar'))">📅</button>
-        <button onclick="secureAction(() => showView('profile'))">👤</button>
+        <button class="nav-btn" onclick="showView('home')">🏠</button>
+        <button class="nav-btn" onclick="showView('calendar')">📅</button>
     </div>
 </div>
 
 <script>
-    // --- AUTH & SECURITY LOGIC ---
-    let currentUser = JSON.parse(localStorage.getItem('myfitness_user')) || null;
-    let data = JSON.parse(localStorage.getItem('myfitness_data')) || { wl: [], mg: [], pfp: null };
-
-    // This function checks if user is logged in before doing anything
-    function secureAction(callback) {
-        if (!currentUser) {
-            document.getElementById('auth-overlay').style.display = 'flex';
-        } else {
-            callback();
-        }
-    }
-
-    function processRegistration() {
-        const u = document.getElementById('reg-username').value;
-        const p = document.getElementById('reg-password').value;
-        if(u && p) {
-            currentUser = { name: u, pass: p };
-            localStorage.setItem('myfitness_user', JSON.stringify(currentUser));
-            document.getElementById('auth-overlay').style.display = 'none';
-            updateProfileUI();
-            alert("Registered successfully!");
-        } else {
-            document.getElementById('auth-error').style.display = 'block';
-        }
-    }
-
-    function updateProfileUI() {
-        if(currentUser) {
-            document.getElementById('user-display').innerText = currentUser.name;
-            document.getElementById('profile-name').innerText = currentUser.name;
-            if(data.pfp) document.getElementById('pfp-display').src = data.pfp;
-        }
-    }
-
-    function logoutAccount() {
-        localStorage.removeItem('myfitness_user');
-        location.reload();
-    }
-
-    // --- APP LOGIC (EXISTING) ---
+    // Intro handling
     window.addEventListener('load', () => {
         setTimeout(() => {
-            document.getElementById('intro-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('intro-screen').style.display = 'none';
-                updateProfileUI();
-                updateDashboard();
-            }, 800);
+            const intro = document.getElementById('intro-screen');
+            intro.style.opacity = '0';
+            setTimeout(() => intro.style.display = 'none', 800);
         }, 2000);
     });
 
+    let data = JSON.parse(localStorage.getItem('myfitness_multi')) || { wl: [], mg: [] };
     let currentPlan = 'wl';
     let currentDay = 1;
     let workoutQueue = [];
@@ -203,13 +133,38 @@
     let timerInterval;
 
     const exerciseData = {
-        wl: { warmup: [{ name: "Jumping Jacks", value: 30, isTimer: true }], main: [{ name: "Burpees", value: 10, isTimer: false }] },
-        mg: { warmup: [{ name: "Spot Jogging", value: 40, isTimer: true }], main: [{ name: "Diamond Pushups", value: 12, isTimer: false }] }
+        wl: {
+            warmup: [
+                { name: "Jumping Jacks", value: 30, isTimer: true, icon: "✨" },
+                { name: "High Knees", value: 30, isTimer: true, icon: "🏃" },
+                { name: "Arm Swings", value: 15, isTimer: false, icon: "🙆" }
+            ],
+            main: [
+                { name: "Burpees", value: 8, isTimer: false, icon: "💥" },
+                { name: "Mountain Climbers", value: 30, isTimer: true, icon: "🏔️" },
+                { name: "Bodyweight Squats", value: 15, isTimer: false, icon: "🦵" },
+                { name: "Plank Jacks", value: 20, isTimer: false, icon: "⏱️" }
+            ]
+        },
+        mg: {
+            warmup: [
+                { name: "Spot Jogging", value: 40, isTimer: true, icon: "🏃" },
+                { name: "Cat Cow Stretch", value: 10, isTimer: false, icon: "🐈" },
+                { name: "Dynamic Lunges", value: 10, isTimer: false, icon: "🚶" }
+            ],
+            main: [
+                { name: "Decline Pushups", value: 10, isTimer: false, icon: "💪" },
+                { name: "Bulgarian Split Squats", value: 10, isTimer: false, icon: "🦵" },
+                { name: "Diamond Pushups", value: 8, isTimer: false, icon: "💎" },
+                { name: "Superman Hold", value: 30, isTimer: true, icon: "🦸" }
+            ]
+        }
     };
 
     function showView(viewId) {
         document.querySelectorAll('.content').forEach(v => v.classList.remove('active-view'));
         document.getElementById(viewId).classList.add('active-view');
+        updateDashboard();
     }
 
     function openPlan(planKey) {
@@ -225,9 +180,10 @@
         for (let i = 1; i <= 30; i++) {
             const btn = document.createElement('div');
             const isDone = data[currentPlan].includes(i);
-            btn.className = `day-btn ${isDone ? 'done' : 'locked'}`;
+            const isCurrent = i === data[currentPlan].length + 1;
+            btn.className = `day-btn ${isDone ? 'done' : (isCurrent ? 'current' : 'locked')}`;
             btn.innerText = i;
-            btn.onclick = () => secureAction(() => prepareWorkout(i));
+            btn.onclick = () => { if (i <= data[currentPlan].length + 1) prepareWorkout(i); };
             grid.appendChild(btn);
         }
     }
@@ -235,72 +191,107 @@
     function prepareWorkout(day) {
         currentDay = day;
         document.getElementById('workout-title').innerText = "Day " + day;
-        // Basic Queue setup
+        let repsBoost = Math.floor((day - 1) / 2) * 2;
+        let setsCount = 2 + Math.floor((day - 1) / 14);
         const plan = exerciseData[currentPlan];
-        workoutQueue = [...plan.warmup, ...plan.main]; 
+        workoutQueue = [];
+        plan.warmup.forEach(ex => {
+            workoutQueue.push({ ...ex, type: 'Warmup', set: 1, totalSets: 1, val: ex.isTimer ? ex.value : ex.value + Math.floor(repsBoost/2) });
+        });
+        plan.main.forEach(ex => {
+            for(let s = 1; s <= setsCount; s++) {
+                workoutQueue.push({ ...ex, type: 'Main', set: s, totalSets: setsCount, val: ex.isTimer ? ex.value + repsBoost : ex.value + repsBoost });
+            }
+        });
+        renderPreview('warmup-preview', workoutQueue.filter(q => q.type === 'Warmup'));
+        renderPreview('workout-preview', plan.main.map(ex => ({...ex, val: ex.value + repsBoost, totalSets: setsCount})));
+        document.getElementById('start-btn').onclick = () => {
+            currentIdx = 0;
+            document.getElementById('player-view').classList.add('player-active');
+            loadStep();
+        };
         showView('workout');
     }
 
-    function startExercise() {
-        currentIdx = 0;
-        document.getElementById('player-view').classList.add('player-active');
-        loadStep();
+    function renderPreview(id, items) {
+        document.getElementById(id).innerHTML = items.map(item => `
+            <div class="exercise-item">
+                <div style="font-size:1.5rem">${item.icon}</div>
+                <div style="flex:1"><b>${item.name}</b><br><small>${item.totalSets} Sets</small></div>
+                <div>${item.val} ${item.isTimer ? 'Sec' : 'Reps'}</div>
+            </div>
+        `).join('');
     }
 
     function loadStep() {
         clearInterval(timerInterval);
         const step = workoutQueue[currentIdx];
+        const timerDisp = document.getElementById('timer-display');
+        const actionBtn = document.getElementById('main-action-btn');
+        document.getElementById('player-meta').innerText = `${step.type.toUpperCase()} | SET ${step.set} OF ${step.totalSets}`;
         document.getElementById('player-ex-name').innerText = step.name;
+        document.getElementById('player-img').innerText = step.icon;
+        document.getElementById('player-target').innerText = step.isTimer ? "Keep Going!" : step.val + " Reps";
         if(step.isTimer) {
-            let timeLeft = step.value;
+            timerDisp.style.display = 'block';
+            actionBtn.innerText = "Skip";
+            let timeLeft = step.val;
             timerInterval = setInterval(() => {
-                document.getElementById('timer-display').innerText = timeLeft;
-                if(timeLeft-- <= 0) nextStep();
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                timerDisp.innerText = `${m}:${s.toString().padStart(2, '0')}`;
+                if(timeLeft <= 0) nextStep();
+                timeLeft--;
             }, 1000);
         } else {
-            document.getElementById('timer-display').innerText = step.value + " Reps";
+            timerDisp.style.display = 'none';
+            actionBtn.innerText = "Next Step";
         }
     }
 
     function nextStep() {
         if(currentIdx < workoutQueue.length - 1) {
-            currentIdx++; loadStep();
+            currentIdx++;
+            loadStep();
         } else {
             completeWorkout();
         }
     }
 
-    function completeWorkout() {
-        if(!data[currentPlan].includes(currentDay)) data[currentPlan].push(currentDay);
-        saveData();
-        document.getElementById('success-overlay').style.display = 'flex';
-        setTimeout(() => {
-            document.getElementById('success-overlay').style.display = 'none';
-            document.getElementById('player-view').classList.remove('player-active');
-            showView('home');
-            updateDashboard();
-        }, 2000);
-    }
-
-    function uploadPhoto(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                document.getElementById('pfp-display').src = e.target.result;
-                data.pfp = e.target.result;
-                saveData();
-            };
-            reader.readAsDataURL(input.files[0]);
+    function prevStep() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            loadStep();
         }
     }
 
-    function saveData() { localStorage.setItem('myfitness_data', JSON.stringify(data)); }
+    function completeWorkout() {
+        clearInterval(timerInterval);
+        if(!data[currentPlan].includes(currentDay)) {
+            data[currentPlan].push(currentDay);
+            localStorage.setItem('myfitness_multi', JSON.stringify(data));
+        }
+        
+        const success = document.getElementById('success-overlay');
+        success.style.display = 'flex';
+        success.style.opacity = '1';
+        
+        setTimeout(() => {
+            success.style.opacity = '0'; // Smooth Fade Out
+            setTimeout(() => {
+                success.style.display = 'none';
+                document.getElementById('player-view').classList.remove('player-active');
+                showView('home');
+            }, 800);
+        }, 2500);
+    }
 
     function updateDashboard() {
         document.getElementById('bar-wl').style.width = (data.wl.length / 30 * 100) + "%";
         document.getElementById('bar-mg').style.width = (data.mg.length / 30 * 100) + "%";
-        document.getElementById('total-strikes').innerText = data.wl.length + data.mg.length;
     }
+
+    updateDashboard();
 </script>
 </body>
 </html>
